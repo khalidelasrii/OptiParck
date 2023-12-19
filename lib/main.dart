@@ -1,174 +1,117 @@
 import 'package:flutter/material.dart';
+// import 'package:optiparck/homepage.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 void main() {
-  runApp(const HomePage());
+  runApp(const MyApp());
 }
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+// class MyApp extends StatelessWidget {
+//   const MyApp({super.key});
+
+//   // This widget is the root of your application.
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       title: 'Flutter GoogleMaps Demo',
+//       theme: ThemeData(
+//         primaryColor: Colors.indigo,
+//       ),
+//       home: const HomePage(),
+//     );
+//   }
+// }
+
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.orangeAccent),
-          useMaterial3: true,
-        ),
-        home: const SearchBarApp());
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  GoogleMapController? mapController;
+  int currIndex = 0;
+
+  final LatLng _marocPosition = const LatLng(31.7917, -7.0926);
+
+  void _onMapCreated(GoogleMapController controller) {
+    mapController = controller;
   }
-}
 
-class SearchBarApp extends StatefulWidget {
-  const SearchBarApp({super.key});
-
-  @override
-  State<SearchBarApp> createState() => _SearchBarAppState();
-}
-
-class _SearchBarAppState extends State<SearchBarApp> {
-  bool isDark = false;
-  bool search = false;
   @override
   Widget build(BuildContext context) {
-    final ThemeData themeData = ThemeData(
-        useMaterial3: true,
-        brightness: isDark ? Brightness.dark : Brightness.light);
-
+    List<Widget> bodybuilder = [
+      GoogleMap(
+        onMapCreated: _onMapCreated,
+        initialCameraPosition: CameraPosition(
+          target: _marocPosition,
+          zoom: 6.0,
+        ),
+      ),
+      Center(
+        child: CircularProgressIndicator(
+          color: Colors.green,
+        ),
+      ),
+      Center(
+        child: CircularProgressIndicator(
+          color: Colors.blue,
+        ),
+      ),
+    ];
     return MaterialApp(
-      theme: themeData,
       debugShowCheckedModeBanner: false,
-      home: SafeArea(
-        child: Scaffold(
-            appBar: AppBar(
-              title: Image.asset(
-                "images/logo.png",
-                height: 50,
+      home: Scaffold(
+        appBar: AppBar(
+          actions: [
+            IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.search,
+                  color: Colors.white,
+                )),
+            IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.notifications,
+                  color: Colors.white,
+                )),
+          ],
+          title: const Text(
+            'OptiParck',
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+          ),
+          backgroundColor: Colors.orangeAccent,
+        ),
+        body: bodybuilder[currIndex],
+        bottomNavigationBar: BottomNavigationBar(
+            backgroundColor: Colors.orangeAccent,
+            selectedItemColor: Colors.indigo,
+            unselectedItemColor: Colors.white,
+            elevation: 0,
+            currentIndex: currIndex,
+            onTap: (int newIndex) {
+              setState(() {
+                currIndex = newIndex;
+              });
+            },
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: 'Home',
               ),
-              actions: [
-                search
-                    ? const SizedBox()
-                    : IconButton(
-                        onPressed: () {
-                          setState(() {
-                            search = true;
-                          });
-                        },
-                        icon: const Icon(Icons.search)),
-                Tooltip(
-                  message: 'Change brightness mode',
-                  child: IconButton(
-                    isSelected: isDark,
-                    onPressed: () {
-                      setState(() {
-                        isDark = !isDark;
-                      });
-                    },
-                    icon: const Icon(Icons.wb_sunny_outlined),
-                    selectedIcon: const Icon(Icons.brightness_2_outlined),
-                  ),
-                )
-              ],
-            ),
-            body: Column(
-              children: [
-                search
-                    ? Padding(
-                        padding: const EdgeInsets.all(8),
-                        child: SearchAnchor(builder: (BuildContext context,
-                            SearchController controller) {
-                          return SearchBar(
-                            controller: controller,
-                            padding: const MaterialStatePropertyAll<EdgeInsets>(
-                                EdgeInsets.symmetric(horizontal: 16.0)),
-                            onTap: () {
-                              controller.openView();
-                            },
-                            onChanged: (_) {
-                              controller.openView();
-                            },
-                            leading: const Icon(Icons.search),
-                            trailing: <Widget>[
-                              IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    search = false;
-                                  });
-                                },
-                                icon: const Icon(Icons.close),
-                              )
-                            ],
-                          );
-                        }, suggestionsBuilder: (BuildContext context,
-                            SearchController controller) {
-                          return List<ListTile>.generate(7, (int index) {
-                            final String item = 'Station $index';
-                            return ListTile(
-                              title: Text(item),
-                              onTap: () {
-                                setState(() {
-                                  controller.closeView(item);
-                                });
-                              },
-                            );
-                          });
-                        }),
-                      )
-                    : const SizedBox(),
-                Center(
-                  child: Image.asset("images/logo.png"),
-                ),
-              ],
-            )),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.history),
+                label: 'History',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person),
+                label: 'Profile',
+              ),
+            ]),
       ),
     );
   }
 }
-
-
-// class MapSample extends StatefulWidget {
-//   const MapSample({super.key});
-
-//   @override
-//   State<MapSample> createState() => MapSampleState();
-// }
-
-// class MapSampleState extends State<MapSample> {
-//   final Completer<GoogleMapController> _controller =
-//       Completer<GoogleMapController>();
-
-//   static const CameraPosition _kGooglePlex = CameraPosition(
-//     target: LatLng(37.42796133580664, -122.085749655962),
-//     zoom: 14.4746,
-//   );
-
-//   static const CameraPosition _kLake = CameraPosition(
-//       bearing: 192.8334901395799,
-//       target: LatLng(37.43296265331129, -122.08832357078792),
-//       tilt: 59.440717697143555,
-//       zoom: 19.151926040649414);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(backgroundColor: Colors.amber),
-//       body: GoogleMap(
-//         mapType: MapType.hybrid,
-//         initialCameraPosition: _kGooglePlex,
-//         onMapCreated: (GoogleMapController controller) {
-//           _controller.complete(controller);
-//         },
-//       ),
-//       floatingActionButton: FloatingActionButton.extended(
-//         onPressed: _goToTheLake,
-//         label: const Text('To the lake!'),
-//         icon: const Icon(Icons.directions_boat),
-//       ),
-//     );
-//   }
-
-//   Future<void> _goToTheLake() async {
-//     final GoogleMapController controller = await _controller.future;
-//     await controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
-//   }
-// }
