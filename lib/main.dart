@@ -1,40 +1,22 @@
 import 'package:flutter/material.dart';
-// import 'package:optiparck/homepage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const HomePage());
 }
 
-// class MyApp extends StatelessWidget {
-//   const MyApp({super.key});
-
-//   // This widget is the root of your application.
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       title: 'Flutter GoogleMaps Demo',
-//       theme: ThemeData(
-//         primaryColor: Colors.indigo,
-//       ),
-//       home: const HomePage(),
-//     );
-//   }
-// }
-
-class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  _MyAppState createState() => _MyAppState();
+  HomePageState createState() => HomePageState();
 }
 
-class _MyAppState extends State<MyApp> {
+class HomePageState extends State<HomePage> {
   GoogleMapController? mapController;
   int currIndex = 0;
 
-  final LatLng _marocPosition = const LatLng(31.7917, -7.0926);
+  final LatLng _marocPosition = const LatLng(33.839112, -6.935222);
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
@@ -42,20 +24,62 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    Marker tamesna = Marker(
+      markerId: const MarkerId('Station 1'),
+      position: const LatLng(33.839112, -6.935222),
+      infoWindow: const InfoWindow(title: 'Station'),
+      icon: BitmapDescriptor.defaultMarkerWithHue(
+        BitmapDescriptor.hueRed,
+      ),
+    );
+    Marker temara = Marker(
+      markerId: const MarkerId('Station 2'),
+      position: const LatLng(33.910959, -6.902740),
+      infoWindow: const InfoWindow(title: 'Station'),
+      icon: BitmapDescriptor.defaultMarkerWithHue(
+        BitmapDescriptor.hueRed,
+      ),
+    );
+    Marker rabatStation = Marker(
+      markerId: const MarkerId('Station 3'),
+      position: const LatLng(33.841594, -6.934475),
+      infoWindow: const InfoWindow(title: 'Station'),
+      icon: BitmapDescriptor.defaultMarkerWithHue(
+        BitmapDescriptor.hueGreen,
+      ),
+    );
+    Marker tamesnaNonr = Marker(
+      markerId: const MarkerId('Station 3'),
+      position: const LatLng(33.823249, -6.923111),
+      infoWindow: const InfoWindow(title: 'Station'),
+      icon: BitmapDescriptor.defaultMarkerWithHue(
+        BitmapDescriptor.hueGreen,
+      ),
+    );
+    Marker tamesnaNonr1 = Marker(
+      markerId: const MarkerId('Station 3'),
+      position: const LatLng(33.820790, -6.937618),
+      infoWindow: const InfoWindow(title: 'Station'),
+      icon: BitmapDescriptor.defaultMarkerWithHue(
+        BitmapDescriptor.hueRed,
+      ),
+    );
+
     List<Widget> bodybuilder = [
       GoogleMap(
         onMapCreated: _onMapCreated,
         initialCameraPosition: CameraPosition(
           target: _marocPosition,
-          zoom: 6.0,
+          zoom: 14.0,
         ),
+        markers: {tamesnaNonr1, tamesnaNonr, temara, tamesna, rabatStation},
       ),
-      Center(
+      const Center(
         child: CircularProgressIndicator(
           color: Colors.green,
         ),
       ),
-      Center(
+      const Center(
         child: CircularProgressIndicator(
           color: Colors.blue,
         ),
