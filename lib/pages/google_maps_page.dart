@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class GoogleMaps extends StatefulWidget {
-  const GoogleMaps({super.key});
+class GoogleMapsPage extends StatefulWidget {
+  const GoogleMapsPage({super.key});
 
   @override
-  State<GoogleMaps> createState() => _GoogleMapsState();
+  State<GoogleMapsPage> createState() => _GoogleMapsPageState();
 }
 
-class _GoogleMapsState extends State<GoogleMaps> {
+class _GoogleMapsPageState extends State<GoogleMapsPage> {
   GoogleMapController? mapController;
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
