@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:optiparck/bloc/bloc/auth_bloc.dart';
+import 'package:optiparck/pages/home_page.dart';
 
 // Créez vos propres classes AuthBloc et AuthState si elles ne sont pas déjà définies
 
@@ -16,21 +17,44 @@ class _SignInPageState extends State<SignInPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.blueGrey,
-      appBar: _buildAppBar(),
+      appBar: _buildAppBar(context),
       body: const BuildBody(),
     );
   }
 
-  AppBar _buildAppBar() {
+  AppBar _buildAppBar(BuildContext context) {
     return AppBar(
       backgroundColor: Colors.blueGrey,
-      title: Image.asset('images/logo.png', height: 30),
+      leading: IconButton(
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (_) => const HomePage()));
+        },
+        icon: const Icon(
+          Icons.arrow_back_rounded,
+          color: Colors.white,
+        ),
+      ),
     );
   }
 }
 
-class BuildBody extends StatelessWidget {
+class BuildBody extends StatefulWidget {
   const BuildBody({Key? key}) : super(key: key);
+
+  @override
+  State<BuildBody> createState() => _BuildBodyState();
+}
+
+class _BuildBodyState extends State<BuildBody> {
+  TextEditingController emailControllor = TextEditingController();
+  TextEditingController passwordControllor = TextEditingController();
+  @override
+  void dispose() {
+    super.dispose();
+    emailControllor.dispose();
+    passwordControllor.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -99,8 +123,31 @@ class BuildBody extends StatelessWidget {
                             padding: const EdgeInsets.all(8),
                             child: SizedBox(
                               child: TextField(
-                                controller:
-                                    TextEditingController(), // Votre TextField pour l'email ici
+                                controller: emailControllor,
+                                keyboardType: TextInputType.emailAddress,
+                                decoration: const InputDecoration(
+                                  hoverColor: Colors.blue,
+                                  hintText: 'Email',
+                                  hintStyle: TextStyle(color: Colors.white),
+                                  filled: true,
+                                  fillColor: Colors.blueGrey,
+                                  border: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20)),
+                                    borderSide: BorderSide(
+                                        color: Colors.blue, width: 1),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20)),
+                                    borderSide: BorderSide(
+                                        color: Colors.orange, width: 2),
+                                  ),
+                                ),
                               ),
                             ),
                           ),
@@ -108,8 +155,31 @@ class BuildBody extends StatelessWidget {
                             padding: const EdgeInsets.all(8),
                             child: SizedBox(
                               child: TextField(
-                                controller:
-                                    TextEditingController(), // Votre TextField pour le mot de passe ici
+                                controller: passwordControllor,
+                                keyboardType: TextInputType.emailAddress,
+                                decoration: const InputDecoration(
+                                  hoverColor: Colors.blue,
+                                  hintText: 'Password',
+                                  hintStyle: TextStyle(color: Colors.white),
+                                  filled: true,
+                                  fillColor: Colors.blueGrey,
+                                  // border: OutlineInputBorder(
+                                  //   borderRadius:
+                                  //       BorderRadius.all(Radius.circular(20)),
+                                  // ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20)),
+                                    borderSide: BorderSide(
+                                        color: Colors.blue, width: 1),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20)),
+                                    borderSide: BorderSide(
+                                        color: Colors.orange, width: 2),
+                                  ),
+                                ),
                               ),
                             ),
                           ),

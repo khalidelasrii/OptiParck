@@ -54,6 +54,7 @@ class HomePageState extends State<HomePage> {
     return Scaffold(
       //! appbar
       appBar: AppBar(
+        leading: null,
         actions: [
           IconButton(
               onPressed: () {},
@@ -63,8 +64,8 @@ class HomePageState extends State<HomePage> {
               )),
           IconButton(
               onPressed: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (_) => SignInPage()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => const SignInPage()));
               },
               icon: const Icon(
                 Icons.notifications,
@@ -75,7 +76,7 @@ class HomePageState extends State<HomePage> {
           'OptiParck',
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
-        backgroundColor: Colors.orangeAccent,
+        backgroundColor: Colors.orange,
       ),
 
       //! Body

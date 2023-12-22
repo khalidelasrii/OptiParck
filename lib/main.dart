@@ -1,10 +1,22 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:optiparck/bloc/bloc/auth_bloc.dart';
 import 'package:optiparck/pages/home_page.dart';
-import 'package:optiparck/pages/sing_in_page.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: const FirebaseOptions(
+      apiKey: "AIzaSyDneaYQTPYSFLx0nJGxgyg6rgXqDt0fKws",
+      appId: "1:108427386333:android:8e3908e86c48ff9c7d2a34",
+      projectId: "optiparck",
+      messagingSenderId: '108427386333',
+      authDomain: 'optiparck.firebaseapp.com',
+    ),
+  );
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp();
   runApp(const OptiParck());
 }
 
@@ -21,7 +33,7 @@ class OptiParck extends StatelessWidget {
       ],
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: SignInPage(),
+        home: HomePage(),
       ),
     );
   }

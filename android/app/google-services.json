@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "108427386333",
+    "project_id": "optiparck",
+    "storage_bucket": "optiparck.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:108427386333:android:8e3908e86c48ff9c7d2a34",
+        "android_client_info": {
+          "package_name": "com.example.optiparck"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnqs5RAWr-P8Cna_vkVj_qlFM2QRgkDEw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

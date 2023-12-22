@@ -2,6 +2,7 @@ plugins {
     id "com.android.application"
     id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
+    id 'com.google.gms.google-services'
 }
 
 def localProperties = new Properties()
@@ -24,7 +25,7 @@ if (flutterVersionName == null) {
 
 android {
     namespace "com.example.optiparck"
-    compileSdkVersion flutter.compileSdkVersion
+    compileSdkVersion 33
     ndkVersion flutter.ndkVersion
 
     compileOptions {
@@ -50,6 +51,15 @@ android {
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
         }
+    }
+
+    dependencies {
+        // Importez le BoM (Bill of Materials) Firebase
+        implementation platform('com.google.firebase:firebase-bom:32.7.0')
+
+        // Ajoutez les dépendances pour les produits Firebase que vous souhaitez utiliser
+        // Lors de l'utilisation du BoM, ne spécifiez pas les versions des dépendances Firebase
+        // https://firebase.google.com/docs/android/setup#available-libraries
     }
 }
 
