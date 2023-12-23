@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:optiparck/bloc/bloc/auth_bloc.dart';
+import 'package:optiparck/bloc/cubit/auth_cubit.dart';
 import 'package:optiparck/pages/home_page.dart';
+import 'package:optiparck/widgets/datasources.dart';
+import 'package:optiparck/widgets/snack_bar_messages.dart';
 
 // Créez vos propres classes AuthBloc et AuthState si elles ne sont pas déjà définies
 
@@ -58,14 +60,18 @@ class _BuildBodyState extends State<BuildBody> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AuthBloc, AuthState>(
+    return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is ErrorSignInState) {
           // Traitement en cas d'erreur de connexion
-          // SnackBarMessage().showErrorSnackBar(message: state.message, context: context);
+          SnackBarMessage()
+              .showErrorSnackBar(message: "Error to connect", context: context);
         } else if (state is IsSignInState) {
           // Traitement après une connexion réussie
-          // SnackBarMessage().showSuccessSnackBar(message: "Hello !", context: context);
+          SnackBarMessage().showSuccessSnackBar(
+              message: "BienVenue dans Optiparck", context: context);
+          Navigator.push(
+              context, MaterialPageRoute(builder: (_) => const HomePage()));
         }
       },
       builder: (context, state) {
@@ -199,7 +205,15 @@ class _BuildBodyState extends State<BuildBody> {
                                     // backgroundColor: Colors.blue,
                                   ),
                                   onPressed: () {
-                                    // Action pour se connecter avec Google
+                                    // Action pour se connecter
+
+                                    BlocProvider.of<AuthCubit>(context)
+                                        .singInEvent(Client(
+                                            userName: "userName",
+                                            userId: "userId",
+                                            userEmail: emailControllor.text,
+                                            userPassword:
+                                                passwordControllor.text));
                                   },
                                   child: const ListTile(
                                     title: Center(
