@@ -1,12 +1,11 @@
-import 'dart:async';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:optiparck/bloc/Info_cuibit/info_cubit.dart';
 import 'package:optiparck/bloc/cubit/auth_cubit.dart';
 import 'package:optiparck/pages/home_page.dart';
-import 'package:optiparck/widgets/snack_bar_messages.dart';
+import 'package:optiparck/pages/sing_in_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,15 +29,19 @@ class OptiParck extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    User? user = FirebaseAuth.instance.currentUser;
     return MultiBlocProvider(
       providers: [
         BlocProvider(
           create: (context) => AuthCubit(),
+        ),
+        BlocProvider(
+          create: (context) => InfoCubit(),
         )
       ],
-      child: const MaterialApp(
+      child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: HomePage(),
+        home: user != null ? const HomePage() : const SignInPage(),
       ),
     );
   }

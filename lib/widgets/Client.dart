@@ -7,7 +7,7 @@ class Client extends Equatable {
   final String userEmail;
   final String userPassword;
   final String? userphoto;
-  final String? phoneNumber;
+  final int? phoneNumber;
 
   const Client(
       {required this.userName,
@@ -18,7 +18,7 @@ class Client extends Equatable {
       this.userphoto,
       this.phoneNumber});
 
-  Map<String, dynamic> clientToMap() {
+  Map<String, dynamic> toMap() {
     return {
       "phoneNumber": phoneNumber,
       "userEmail": userEmail,

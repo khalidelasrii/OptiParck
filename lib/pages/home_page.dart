@@ -19,21 +19,10 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
   int currIndex = 0;
   bool inmap = false;
-  User? user;
-  @override
-  void initState() {
-    super.initState();
-    FirebaseAuth.instance.authStateChanges().listen((User? usr) {
-      if (usr != null) {
-        setState(() {
-          user = usr;
-        });
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
+    User? user = FirebaseAuth.instance.currentUser;
     InternetConnectionChecker().onStatusChange.listen((status) {
       switch (status) {
         case InternetConnectionStatus.connected:
@@ -63,19 +52,13 @@ class HomePageState extends State<HomePage> {
     ];
     List<Widget> bodybuilder = [
       const GoogleMapsPage(),
-      const Center(
-        child: CircularProgressIndicator(
-          color: Colors.orange,
-        ),
-      ),
+      const History(),
       const Center(
         child: CircularProgressIndicator(
           color: Colors.green,
         ),
       ),
-      ProfilePage(
-        user: user,
-      ),
+      const ProfilePage(),
     ];
 
     return Scaffold(
@@ -115,9 +98,16 @@ class HomePageState extends State<HomePage> {
                   ],
                 ),
         ],
-        title: Image.asset(
-          "images/logo.png",
-          height: 30,
+        title: MaterialButton(
+          onPressed: () {
+            setState(() {
+              currIndex = 0;
+            });
+          },
+          child: Image.asset(
+            "images/logo.png",
+            height: 30,
+          ),
         ),
         backgroundColor: user != null ? Colors.orange[200] : Colors.red[200],
       ),

@@ -2,25 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:optiparck/bloc/cubit/auth_cubit.dart';
 import 'package:optiparck/pages/home_page.dart';
-import 'package:optiparck/widgets/datasources.dart';
+import 'package:optiparck/pages/sing_up_page.dart';
+import 'package:optiparck/widgets/Client.dart';
 import 'package:optiparck/widgets/snack_bar_messages.dart';
 
 // Créez vos propres classes AuthBloc et AuthState si elles ne sont pas déjà définies
 
-class SignInPage extends StatefulWidget {
+class SignInPage extends StatelessWidget {
   const SignInPage({Key? key}) : super(key: key);
 
-  @override
-  State<SignInPage> createState() => _SignInPageState();
-}
-
-class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.blueGrey,
       appBar: _buildAppBar(context),
-      body: const BuildBody(),
+      body: const BuildBodySingIn(),
     );
   }
 
@@ -41,14 +37,14 @@ class _SignInPageState extends State<SignInPage> {
   }
 }
 
-class BuildBody extends StatefulWidget {
-  const BuildBody({Key? key}) : super(key: key);
+class BuildBodySingIn extends StatefulWidget {
+  const BuildBodySingIn({Key? key}) : super(key: key);
 
   @override
-  State<BuildBody> createState() => _BuildBodyState();
+  State<BuildBodySingIn> createState() => _BuildBodySingInState();
 }
 
-class _BuildBodyState extends State<BuildBody> {
+class _BuildBodySingInState extends State<BuildBodySingIn> {
   TextEditingController emailControllor = TextEditingController();
   TextEditingController passwordControllor = TextEditingController();
   @override
@@ -117,26 +113,27 @@ class _BuildBodyState extends State<BuildBody> {
                       ),
                       child: Column(
                         children: [
-                          const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text(
-                              'Connexion',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 20),
-                            ),
-                          ),
+                          // const Padding(
+                          //   padding: EdgeInsets.all(8.0),
+                          //   child: Text(
+                          //     'Connexion',
+                          //     style:
+                          //         TextStyle(color: Colors.white, fontSize: 20),
+                          //   ),
+                          // ),
                           Padding(
                             padding: const EdgeInsets.all(8),
                             child: SizedBox(
                               child: TextField(
+                                // style: const TextStyle(color: Colors.white),
                                 controller: emailControllor,
                                 keyboardType: TextInputType.emailAddress,
                                 decoration: const InputDecoration(
                                   hoverColor: Colors.blue,
                                   hintText: 'Email',
-                                  hintStyle: TextStyle(color: Colors.white),
+                                  hintStyle: TextStyle(color: Colors.black),
                                   filled: true,
-                                  fillColor: Colors.blueGrey,
+                                  fillColor: Colors.white,
                                   border: OutlineInputBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(10)),
@@ -161,14 +158,15 @@ class _BuildBodyState extends State<BuildBody> {
                             padding: const EdgeInsets.all(8),
                             child: SizedBox(
                               child: TextField(
+                                // style: const TextStyle(color: Colors.white),
                                 controller: passwordControllor,
                                 keyboardType: TextInputType.emailAddress,
                                 decoration: const InputDecoration(
                                   hoverColor: Colors.blue,
                                   hintText: 'Password',
-                                  hintStyle: TextStyle(color: Colors.white),
+                                  hintStyle: TextStyle(color: Colors.black),
                                   filled: true,
-                                  fillColor: Colors.blueGrey,
+                                  fillColor: Colors.white,
                                   // border: OutlineInputBorder(
                                   //   borderRadius:
                                   //       BorderRadius.all(Radius.circular(20)),
@@ -234,6 +232,12 @@ class _BuildBodyState extends State<BuildBody> {
                                   ),
                                   onPressed: () {
                                     // Action pour se connecter avec Google
+
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (_) =>
+                                                const SingUpPage()));
                                   },
                                   child: const ListTile(
                                     title: Center(
