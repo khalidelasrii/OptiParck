@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 import 'package:optiparck/pages/reservation_page.dart';
 import 'package:optiparck/pages/update_position.dart';
 import 'package:optiparck/widgets/station_marker.dart';
@@ -28,7 +29,20 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
 
   @override
   Widget build(BuildContext context) {
+    //     Future<void> getCurrentLocation() async {
+    //   try {
+    //     LocationData currentLocation = await location.getLocation();
+    //     mapController?.animateCamera(CameraUpdate.newLatLng(
+    //       LatLng(currentLocation.latitude!, currentLocation.longitude!),
+    //     ));
+    //     setState(() {});
+    //   } catch (e) {
+    //     print("Error location: $e");
+    //   }
+    // }
+
     User? user = FirebaseAuth.instance.currentUser;
+
     return StreamBuilder<DatabaseEvent>(
         stream: FirebaseDatabase.instance.ref().child('Marker').onValue,
         builder: (context, AsyncSnapshot<DatabaseEvent> snapshot) {
@@ -71,15 +85,6 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
                                     titleStation:
                                         data["titleStation"].toString(),
                                   )));
-
-                      //  UpdatePosition(
-                      //       positionId: id,
-                      //       altitud: double.parse(
-                      //           data["latitudePosition"].toString()),
-                      //       longitude: double.parse(
-                      //           data["longitudePosition"].toString()),
-                      //       titleStation: data["titleStation"].toString(),
-                      //     )));
                     }
                   },
                 ),
@@ -93,6 +98,8 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
 
             return GoogleMap(
               onMapCreated: _onMapCreated,
+              myLocationButtonEnabled: true,
+              myLocationEnabled: true,
               initialCameraPosition: CameraPosition(
                 target: _marocPosition,
                 zoom: 14.0,
@@ -104,7 +111,8 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
                     DatabaseReference databaseReference =
                         FirebaseDatabase.instance.ref().child('Marker');
                     await databaseReference.push().set(StationMarker(
-                          reserve: false,
+                          userReserve: "Non",
+                          reserve: true,
                           markerId: "",
                           latitudePosition: argument.latitude,
                           longitudePosition: argument.longitude,
@@ -121,4 +129,23 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
           }
         });
   }
+
+  // Future<double> calculateDistance(double latitude2, double longitude2) async {
+  //   // Calcul de la distance
+  //   try {
+  //     LocationData currentLocation = await location.getLocation();
+
+  //     // position1 = await Geolocator.getCurrentPosition();
+
+  //     return Geolocator.distanceBetween(
+  //       currentLocation.altitude!,
+  //       currentLocation.longitude!,
+  //       latitude2,
+  //       longitude2,
+  //     );
+  //     // Mettre à jour l'état pour afficher la distance
+  //   } catch (e) {
+  //     return 0;
+  //   }
+  // }
 }

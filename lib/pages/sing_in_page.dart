@@ -47,6 +47,8 @@ class BuildBodySingIn extends StatefulWidget {
 class _BuildBodySingInState extends State<BuildBodySingIn> {
   TextEditingController emailControllor = TextEditingController();
   TextEditingController passwordControllor = TextEditingController();
+  bool _obscureText = true;
+
   @override
   void dispose() {
     super.dispose();
@@ -113,14 +115,6 @@ class _BuildBodySingInState extends State<BuildBodySingIn> {
                       ),
                       child: Column(
                         children: [
-                          // const Padding(
-                          //   padding: EdgeInsets.all(8.0),
-                          //   child: Text(
-                          //     'Connexion',
-                          //     style:
-                          //         TextStyle(color: Colors.white, fontSize: 20),
-                          //   ),
-                          // ),
                           Padding(
                             padding: const EdgeInsets.all(8),
                             child: SizedBox(
@@ -130,6 +124,7 @@ class _BuildBodySingInState extends State<BuildBodySingIn> {
                                 keyboardType: TextInputType.emailAddress,
                                 decoration: const InputDecoration(
                                   hoverColor: Colors.blue,
+                                  labelText: 'Email',
                                   hintText: 'Email',
                                   hintStyle: TextStyle(color: Colors.black),
                                   filled: true,
@@ -160,24 +155,35 @@ class _BuildBodySingInState extends State<BuildBodySingIn> {
                               child: TextField(
                                 // style: const TextStyle(color: Colors.white),
                                 controller: passwordControllor,
-                                keyboardType: TextInputType.emailAddress,
-                                decoration: const InputDecoration(
-                                  hoverColor: Colors.blue,
+                                obscureText: _obscureText,
+                                keyboardType: TextInputType.visiblePassword,
+                                decoration: InputDecoration(
                                   hintText: 'Password',
-                                  hintStyle: TextStyle(color: Colors.black),
+                                  labelText: 'Password',
+                                  suffixIcon: IconButton(
+                                    icon: Icon(
+                                      _obscureText
+                                          ? Icons.visibility_off
+                                          : Icons.visibility,
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        _obscureText = !_obscureText;
+                                      });
+                                    },
+                                  ),
+                                  hoverColor: Colors.blue,
+                                  hintStyle:
+                                      const TextStyle(color: Colors.black),
                                   filled: true,
                                   fillColor: Colors.white,
-                                  // border: OutlineInputBorder(
-                                  //   borderRadius:
-                                  //       BorderRadius.all(Radius.circular(20)),
-                                  // ),
-                                  enabledBorder: OutlineInputBorder(
+                                  enabledBorder: const OutlineInputBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(20)),
                                     borderSide: BorderSide(
                                         color: Colors.blue, width: 1),
                                   ),
-                                  focusedBorder: OutlineInputBorder(
+                                  focusedBorder: const OutlineInputBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(20)),
                                     borderSide: BorderSide(

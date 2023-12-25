@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:optiparck/bloc/cubit/auth_cubit.dart';
+import 'package:optiparck/pages/all_position_to_reserve.dart';
 import 'package:optiparck/pages/google_maps_page.dart';
+import 'package:optiparck/pages/history_page.dart';
 import 'package:optiparck/pages/profile_page.dart';
 import 'package:optiparck/pages/sing_in_page.dart';
 import 'package:optiparck/widgets/snack_bar_messages.dart';
-import 'package:optiparck/widgets/station_box.dart';
+import 'package:optiparck/widgets/home_station_status.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -34,17 +36,17 @@ class HomePageState extends State<HomePage> {
       }
     });
     List<Widget> localisationBox = [
-      const StationBox(
+      const HomeStationStatus(
         image: 'a.jpg',
         text: 'Station CMC tamesna',
         subtext: "station de voiture et camion",
       ),
-      const StationBox(
+      const HomeStationStatus(
         image: 'b.jpg',
         text: 'Station Temara Centre-Ville',
         subtext: "station de voiture et camion",
       ),
-      const StationBox(
+      const HomeStationStatus(
         image: 'c.jpg',
         text: 'Station Tamesna Nor',
         subtext: "station de voiture et camion",
@@ -52,17 +54,13 @@ class HomePageState extends State<HomePage> {
     ];
     List<Widget> bodybuilder = [
       const GoogleMapsPage(),
-      const History(),
-      const Center(
-        child: CircularProgressIndicator(
-          color: Colors.green,
-        ),
-      ),
+      const AllPositionToReserve(),
+      const HistoryPage(),
       const ProfilePage(),
     ];
 
     return Scaffold(
-      backgroundColor: Colors.orange[200],
+      backgroundColor: const Color(0xFF3B9874),
       //! appbar
       appBar: AppBar(
         actions: [
@@ -109,7 +107,8 @@ class HomePageState extends State<HomePage> {
             height: 30,
           ),
         ),
-        backgroundColor: user != null ? Colors.orange[200] : Colors.red[200],
+        backgroundColor:
+            user != null ? const Color(0xFFF3D039) : Colors.red[200],
       ),
 
       //! Body
@@ -191,25 +190,25 @@ class HomePageState extends State<HomePage> {
           items: [
             BottomNavigationBarItem(
               backgroundColor:
-                  user != null ? Colors.orange[200] : Colors.red[200],
+                  user != null ? const Color(0xFFF3D039) : Colors.red[200],
               icon: const Icon(Icons.home),
               label: 'Home',
             ),
             BottomNavigationBarItem(
               backgroundColor:
-                  user != null ? Colors.orange[200] : Colors.red[200],
+                  user != null ? const Color(0xFFF3D039) : Colors.red[200],
               icon: const Icon(Icons.location_on),
               label: 'Station',
             ),
             BottomNavigationBarItem(
               backgroundColor:
-                  user != null ? Colors.orange[200] : Colors.red[200],
+                  user != null ? const Color(0xFFF3D039) : Colors.red[200],
               icon: const Icon(Icons.history),
               label: 'History',
             ),
             BottomNavigationBarItem(
               backgroundColor:
-                  user != null ? Colors.orange[200] : Colors.red[200],
+                  user != null ? const Color(0xFFF3D039) : Colors.red[200],
               icon: const Icon(Icons.person),
               label: 'Profile',
             ),

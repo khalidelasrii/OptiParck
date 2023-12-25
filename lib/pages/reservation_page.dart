@@ -32,6 +32,7 @@ class ReservationPage extends StatelessWidget {
           context, MaterialPageRoute(builder: (_) => const HomePage()));
     }
 
+    User? user = FirebaseAuth.instance.currentUser;
     return Scaffold(
       backgroundColor: Colors.orange,
       appBar: AppBar(
@@ -100,7 +101,8 @@ class ReservationPage extends StatelessWidget {
                       .child('Marker')
                       .child(positionId)
                       .update(StationMarker(
-                        reserve: true,
+                        userReserve: user!.email!,
+                        reserve: false,
                         markerId: positionId,
                         latitudePosition: altitud,
                         longitudePosition: longitude,
@@ -112,6 +114,7 @@ class ReservationPage extends StatelessWidget {
                       .child(FirebaseAuth.instance.currentUser!.uid)
                       .child(positionId)
                       .set(StationMarker(
+                        userReserve: user.email!,
                         reserve: true,
                         markerId: positionId,
                         latitudePosition: altitud,

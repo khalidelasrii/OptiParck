@@ -179,7 +179,8 @@ class _UpdatePositionState extends State<UpdatePosition> {
                       FirebaseDatabase.instance.ref().child('Marker');
                   await databaseReference.child(widget.positionId).update(
                       StationMarker(
-                              reserve: false,
+                              userReserve: "Non",
+                              reserve: true,
                               markerId: "",
                               latitudePosition: double.parse(
                                   altitudControlor.text.toString()),
@@ -231,6 +232,25 @@ class _UpdatePositionState extends State<UpdatePosition> {
                     style: TextStyle(color: Colors.white),
                   ),
                 )),
+            ElevatedButton(
+                onPressed: () async {
+                  DatabaseReference databaseReference =
+                      FirebaseDatabase.instance.ref().child('Marker');
+                  await databaseReference.child(widget.positionId).update(
+                      StationMarker(
+                              userReserve: "Non",
+                              reserve: true,
+                              markerId: "",
+                              latitudePosition: double.parse(
+                                  altitudControlor.text.toString()),
+                              longitudePosition: double.parse(
+                                  longitudeControlor.text.toString()),
+                              titleStation:
+                                  titleStationControlor.text.toString())
+                          .toMap());
+                  succes();
+                },
+                child: const Text("Dereserver"))
           ],
         ),
       ),

@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:optiparck/bloc/Info_cuibit/info_cubit.dart';
 import 'package:optiparck/bloc/cubit/auth_cubit.dart';
 import 'package:optiparck/pages/sing_in_page.dart';
 
@@ -26,7 +25,8 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     List<Widget> pages = [
-      const History(),
+      Center(child: const CircularProgressIndicator()),
+      // const History(),
       const InfoPage(),
       const SettingsPage(),
     ];
@@ -39,7 +39,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     Column(
                       children: [
                         Container(
-                          color: Colors.orange[200],
+                          color: const Color(0xFF3B9874),
                           width: double.infinity,
                           height: 150,
                         ),
@@ -65,12 +65,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                 alignment: Alignment.bottomCenter,
                                 height: 200,
                                 decoration: const BoxDecoration(
-                                    color: Color.fromARGB(255, 209, 209, 209),
+                                    color: Color(0xFFF3D039),
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(20))),
                                 child: BottomNavigationBar(
                                     backgroundColor: Colors.white12,
-                                    selectedItemColor: Colors.green,
+                                    selectedItemColor: const Color(0xFF4CAF50),
                                     unselectedItemColor: Colors.white,
                                     elevation: 0,
                                     currentIndex: currIndex,
@@ -248,51 +248,5 @@ class InfoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Placeholder();
-  }
-}
-
-class History extends StatefulWidget {
-  const History({super.key});
-
-  @override
-  State<History> createState() => _HistoryState();
-}
-
-class _HistoryState extends State<History> {
-  @override
-  void initState() {
-    super.initState();
-    BlocProvider.of<InfoCubit>(context).historydataEvent();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<InfoCubit, InfoState>(
-      builder: (context, state) {
-        if (state is InfoDataState) {
-          return Container(
-            color: Colors.red,
-            height: 400,
-            width: 400,
-          );
-
-          //  ListView.builder(
-          //     itemCount: state.marker.length,
-          //     itemBuilder: (context, index) {
-          //       return ListTile(
-          //         title: Text(state.marker[index].titleStation),
-          //       );
-          //     });
-        } else {
-          return const Padding(
-            padding: EdgeInsets.only(top: 50),
-            child: Center(
-              child: SizedBox(
-                  height: 30, width: 30, child: CircularProgressIndicator()),
-            ),
-          );
-        }
-      },
-    );
   }
 }

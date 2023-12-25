@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class StationBox extends StatelessWidget {
-  const StationBox(
+class HomeStationStatus extends StatelessWidget {
+  const HomeStationStatus(
       {super.key,
       required this.image,
       required this.subtext,
@@ -19,7 +19,7 @@ class StationBox extends StatelessWidget {
             width: 300,
             decoration: BoxDecoration(
                 color: Colors.black,
-                border: Border.all(color: Colors.blue, width: 3),
+                border: Border.all(color: const Color(0xFFC12328), width: 3),
                 borderRadius: const BorderRadius.all(Radius.circular(15))),
             child: ClipRRect(
               borderRadius: const BorderRadius.all(Radius.circular(15)),

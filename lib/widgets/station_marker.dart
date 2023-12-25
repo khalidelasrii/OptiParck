@@ -6,8 +6,12 @@ class StationMarker extends Equatable {
   final double longitudePosition;
   final String titleStation;
   final bool reserve;
+  final String userReserve;
+  final double? distancebetwin;
 
   const StationMarker({
+    this.distancebetwin,
+    required this.userReserve,
     required this.reserve,
     required this.markerId,
     required this.latitudePosition,
@@ -16,6 +20,7 @@ class StationMarker extends Equatable {
   });
   Map<String, dynamic> toMap() {
     return {
+      "userReserve": userReserve,
       "latitudePosition": latitudePosition,
       "longitudePosition": longitudePosition,
       "titleStation": titleStation,
@@ -24,6 +29,12 @@ class StationMarker extends Equatable {
   }
 
   @override
-  List<Object?> get props =>
-      [markerId, latitudePosition, longitudePosition, titleStation, reserve];
+  List<Object?> get props => [
+        markerId,
+        latitudePosition,
+        longitudePosition,
+        titleStation,
+        reserve,
+        userReserve
+      ];
 }
