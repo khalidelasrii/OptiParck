@@ -175,10 +175,11 @@ class _UpdatePositionState extends State<UpdatePosition> {
                       MaterialStateColor.resolveWith((states) => Colors.blue)),
               onPressed: () async {
                 try {
-                  DatabaseReference databaseReference =
-                      FirebaseDatabase.instance.ref().child('Marker');
-                  await databaseReference.child(widget.positionId).update(
-                      StationMarker(
+                  await FirebaseDatabase.instance
+                      .ref()
+                      .child('Marker')
+                      .child(widget.positionId)
+                      .update(StationMarker(
                               userReserve: "Non",
                               reserve: true,
                               markerId: "",
@@ -189,6 +190,7 @@ class _UpdatePositionState extends State<UpdatePosition> {
                               titleStation:
                                   titleStationControlor.text.toString())
                           .toMap());
+
                   longitudeControlor.clear();
                   titleStationControlor.clear();
                   altitudControlor.clear();
@@ -248,6 +250,19 @@ class _UpdatePositionState extends State<UpdatePosition> {
                               titleStation:
                                   titleStationControlor.text.toString())
                           .toMap());
+                  //             await    FirebaseDatabase.instance.ref().child('Reservation')
+                  // .child(widget.positionId).update(
+                  //       StationMarker(
+                  //               userReserve: "Non",
+                  //               reserve: true,
+                  //               markerId: "",
+                  //               latitudePosition: double.parse(
+                  //                   altitudControlor.text.toString()),
+                  //               longitudePosition: double.parse(
+                  //                   longitudeControlor.text.toString()),
+                  //               titleStation:
+                  //                   titleStationControlor.text.toString())
+                  //           .toMap());
                   succes();
                 },
                 child: const Text("Dereserver"))

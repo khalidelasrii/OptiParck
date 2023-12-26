@@ -30,7 +30,7 @@ class _HistoryPageState extends State<HistoryPage> {
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ListTile(
-                    tileColor: item.reserve ? Colors.green : Colors.redAccent,
+                    tileColor: item.reserve ? Colors.redAccent : Colors.green,
                     title: Text(
                       item.titleStation,
                       style: const TextStyle(
@@ -45,13 +45,14 @@ class _HistoryPageState extends State<HistoryPage> {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    trailing: item.reserve
+                    trailing: item.reserve == false
                         ? ElevatedButton(
                             onPressed: () {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (_) => ReservationPage(
+                                          userHistory: item.userHistory??[],
                                           altitud: item.latitudePosition,
                                           longitude: item.longitudePosition,
                                           titleStation: item.titleStation,

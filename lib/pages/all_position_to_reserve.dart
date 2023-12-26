@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:optiparck/bloc/Info_cuibit/info_cubit.dart';
 import 'package:optiparck/pages/reservation_page.dart';
-import 'package:optiparck/widgets/snack_bar_messages.dart';
 
 class AllPositionToReserve extends StatefulWidget {
   const AllPositionToReserve({super.key});
@@ -24,12 +23,8 @@ class _AllPositionToReserveState extends State<AllPositionToReserve> {
       builder: (context, state) {
         if (state is InfoDataState) {
           try {
-            final list = state.marker;
-
-            list.sort((a, b) =>
-                a.distancebetwin!.compareTo(b.distancebetwin as double));
             return ListView.builder(
-                itemCount: list.length,
+                itemCount: state.marker.length,
                 itemBuilder: (context, index) {
                   final item = state.marker[index];
 
@@ -58,6 +53,7 @@ class _AllPositionToReserveState extends State<AllPositionToReserve> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (_) => ReservationPage(
+                                          userHistory: item.userHistory??[],
                                             altitud: item.latitudePosition,
                                             longitude: item.longitudePosition,
                                             titleStation: item.titleStation,
@@ -72,8 +68,6 @@ class _AllPositionToReserveState extends State<AllPositionToReserve> {
                   );
                 });
           } catch (e) {
-            // SnackBarMessage()
-            //     .showErrorSnackBar(message: "$e", context: context);
             return const Padding(
               padding: EdgeInsets.only(top: 50),
               child: Center(

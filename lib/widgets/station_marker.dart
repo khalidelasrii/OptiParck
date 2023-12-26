@@ -8,8 +8,12 @@ class StationMarker extends Equatable {
   final bool reserve;
   final String userReserve;
   final double? distancebetwin;
+  final List? userHistory;
+  final DateTime? dateReservation;
 
   const StationMarker({
+    this.dateReservation,
+    this.userHistory,
     this.distancebetwin,
     required this.userReserve,
     required this.reserve,
@@ -20,6 +24,8 @@ class StationMarker extends Equatable {
   });
   Map<String, dynamic> toMap() {
     return {
+      "dateReservation": DateTime.now(),
+      "userHistory": userHistory,
       "userReserve": userReserve,
       "latitudePosition": latitudePosition,
       "longitudePosition": longitudePosition,
@@ -35,6 +41,7 @@ class StationMarker extends Equatable {
         longitudePosition,
         titleStation,
         reserve,
-        userReserve
+        userReserve,
+        userHistory
       ];
 }

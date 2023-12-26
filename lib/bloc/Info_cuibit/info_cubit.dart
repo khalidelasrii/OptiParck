@@ -18,7 +18,7 @@ class InfoCubit extends Cubit<InfoState> {
     try {
       String userId = _auth.currentUser!.uid;
       DataSnapshot dataSnapshot =
-          await _database.ref().child("Reservation").child(userId).get();
+          await _database.ref().child("").child(userId).get();
 
       if (dataSnapshot.value != null) {
         Map<dynamic, dynamic> data =
@@ -47,8 +47,8 @@ class InfoCubit extends Cubit<InfoState> {
   }
 
   void getallPositionToReserve() async {
-    LocationData currentLocation = await location.getLocation();
     DataSnapshot dataSnapshot = await _database.ref().child("Marker").get();
+    LocationData currentLocation = await location.getLocation();
 
     try {
       if (dataSnapshot.value != null) {
@@ -58,12 +58,11 @@ class InfoCubit extends Cubit<InfoState> {
         List<Future<StationMarker>> listitems = data.keys.map((key) async {
           var item = data[key];
           double distance = Geolocator.distanceBetween(
-            currentLocation.altitude!,
-            currentLocation.longitude!,
+            currentLocation.latitude ?? 33.83991025264775,
+            currentLocation.longitude ?? -6.936191841959953,
             item["latitudePosition"],
             item["longitudePosition"],
           );
-
           return StationMarker(
             distancebetwin: distance,
             userReserve: item["userReserve"],
@@ -74,7 +73,10 @@ class InfoCubit extends Cubit<InfoState> {
             titleStation: item["titleStation"],
           );
         }).toList();
+
         List<StationMarker> resolvedMarkers = await Future.wait(listitems);
+        resolvedMarkers.sort(
+            (a, b) => a.distancebetwin!.compareTo(b.distancebetwin as double));
         emit(InfoDataState(marker: resolvedMarkers));
       } else {
         emit(ErrorDtatState());

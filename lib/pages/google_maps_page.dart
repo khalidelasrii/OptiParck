@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
 import 'package:optiparck/pages/reservation_page.dart';
 import 'package:optiparck/pages/update_position.dart';
 import 'package:optiparck/widgets/station_marker.dart';
@@ -21,11 +20,11 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
     mapController = controller;
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    mapController?.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  //   mapController?.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +76,7 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
                           context,
                           MaterialPageRoute(
                               builder: (_) => ReservationPage(
+                                    userHistory:data["userHistory"] ,
                                     positionId: id,
                                     altitud: double.parse(
                                         data["latitudePosition"].toString()),
@@ -135,7 +135,7 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
   //   try {
   //     LocationData currentLocation = await location.getLocation();
 
-  //     // position1 = await Geolocator.getCurrentPosition();
+  // position1 = await Geolocator.getCurrentPosition();
 
   //     return Geolocator.distanceBetween(
   //       currentLocation.altitude!,

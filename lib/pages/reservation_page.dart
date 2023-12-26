@@ -6,13 +6,14 @@ import 'package:optiparck/widgets/snack_bar_messages.dart';
 import 'package:optiparck/widgets/station_marker.dart';
 
 class ReservationPage extends StatelessWidget {
-  const ReservationPage({
-    super.key,
-    required this.altitud,
-    required this.longitude,
-    required this.titleStation,
-    required this.positionId,
-  });
+  const ReservationPage(
+      {super.key,
+      required this.altitud,
+      required this.longitude,
+      required this.titleStation,
+      required this.positionId,
+      required this.userHistory,});
+  final List userHistory;
   final double altitud;
   final double longitude;
   final String titleStation;
@@ -109,18 +110,14 @@ class ReservationPage extends StatelessWidget {
                         titleStation: titleStation,
                       ).toMap());
 
-                  databaseReference
-                      .child('Reservation')
-                      .child(FirebaseAuth.instance.currentUser!.uid)
-                      .child(positionId)
-                      .set(StationMarker(
-                        userReserve: user.email!,
-                        reserve: true,
-                        markerId: positionId,
-                        latitudePosition: altitud,
-                        longitudePosition: longitude,
-                        titleStation: titleStation,
-                      ).toMap());
+                  // .set(StationMarker(
+                  //   userReserve: user.email!,
+                  //   reserve: true,
+                  //   markerId: positionId,
+                  //   latitudePosition: altitud,
+                  //   longitudePosition: longitude,
+                  //   titleStation: titleStation,
+                  // ).toMap());
                   succes();
                 } catch (e) {
                   erroradd();

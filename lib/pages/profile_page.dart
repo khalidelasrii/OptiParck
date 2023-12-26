@@ -24,16 +24,23 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> pages = [
-      Center(child: const CircularProgressIndicator()),
-      // const History(),
-      const InfoPage(),
-      const SettingsPage(),
-    ];
     return user != null
         ? BlocBuilder<AuthCubit, AuthState>(
             builder: (context, state) {
               if (state is IsSignInState) {
+                List<Widget> pages = [
+                  InfoPage(
+                    name: state.user.userName,
+                    email: state.user.userEmail,
+                    phone: state.user.phoneNumber.toString(),
+                  ),
+                  const Center(
+                      child: Padding(
+                    padding: EdgeInsets.only(top: 60),
+                    child: CircularProgressIndicator(),
+                  )),
+                  const SettingsPage(),
+                ];
                 return Stack(
                   children: [
                     Column(
@@ -81,12 +88,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                     },
                                     items: const [
                                       BottomNavigationBarItem(
-                                        icon: Icon(Icons.history),
-                                        label: 'history',
-                                      ),
-                                      BottomNavigationBarItem(
                                         icon: Icon(Icons.info_outline),
                                         label: 'Info',
+                                      ),
+                                      BottomNavigationBarItem(
+                                        icon: Icon(Icons.history),
+                                        label: 'history',
                                       ),
                                       BottomNavigationBarItem(
                                         icon: Icon(Icons.settings),
@@ -205,11 +212,6 @@ class _ProfilePageState extends State<ProfilePage> {
                             )
                           ],
                         ),
-                        SizedBox(
-                          height: 100,
-                          width: 100,
-                          child: pages[currIndex],
-                        )
                       ],
                     )
                   ],
@@ -243,10 +245,43 @@ class SettingsPage extends StatelessWidget {
 }
 
 class InfoPage extends StatelessWidget {
-  const InfoPage({super.key});
+  const InfoPage({
+    super.key,
+    required this.name,
+    required this.email,
+    required this.phone,
+  });
+  final String name;
+  final String email;
+  final String phone;
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Name:$name",
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Text(
+            "email: $email",
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Text(
+            "phone:$phone",
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          )
+        ],
+      ),
+    );
   }
 }
