@@ -17,4 +17,6 @@ class InfoDataState extends InfoState {
   List<Object> get props => [marker];
 }
 
+class ErrorInfoDataState extends InfoState {}
+
 class ErrorDtatState extends InfoState {}

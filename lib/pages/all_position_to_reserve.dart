@@ -31,6 +31,7 @@ class _AllPositionToReserveState extends State<AllPositionToReserve> {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ListTile(
+                      leading: const Icon(Icons.location_on_outlined),
                       tileColor: item.reserve ? Colors.green : Colors.redAccent,
                       title: Text(
                         item.titleStation,
@@ -39,13 +40,23 @@ class _AllPositionToReserveState extends State<AllPositionToReserve> {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      subtitle: Text(
-                        "(${item.latitudePosition},${item.longitudePosition})",
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold, color: Colors.white),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
+                      subtitle: item.distancebetwin! < 1000
+                          ? Text(
+                              "${item.distancebetwin!.toStringAsFixed(2)} m",
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            )
+                          : Text(
+                              "${(item.distancebetwin! / 1000).toStringAsFixed(2)} Km",
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                       trailing: item.reserve
                           ? ElevatedButton(
                               onPressed: () {
@@ -53,7 +64,7 @@ class _AllPositionToReserveState extends State<AllPositionToReserve> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (_) => ReservationPage(
-                                          userHistory: item.userHistory??[],
+                                            userHistory: item.userHistory ?? [],
                                             altitud: item.latitudePosition,
                                             longitude: item.longitudePosition,
                                             titleStation: item.titleStation,

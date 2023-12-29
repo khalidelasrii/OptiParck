@@ -52,7 +52,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (_) => ReservationPage(
-                                          userHistory: item.userHistory??[],
+                                          userHistory: item.userHistory ?? [],
                                           altitud: item.latitudePosition,
                                           longitude: item.longitudePosition,
                                           titleStation: item.titleStation,

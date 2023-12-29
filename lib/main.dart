@@ -37,7 +37,7 @@ class OptiParck extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => InfoCubit(),
-        )
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

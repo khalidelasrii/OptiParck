@@ -18,7 +18,7 @@ class InfoCubit extends Cubit<InfoState> {
     try {
       String userId = _auth.currentUser!.uid;
       DataSnapshot dataSnapshot =
-          await _database.ref().child("").child(userId).get();
+          await _database.ref().child("Reservation").child(userId).get();
 
       if (dataSnapshot.value != null) {
         Map<dynamic, dynamic> data =
@@ -55,11 +55,13 @@ class InfoCubit extends Cubit<InfoState> {
         Map<dynamic, dynamic> data =
             dataSnapshot.value as Map<dynamic, dynamic>;
 
-        List<Future<StationMarker>> listitems = data.keys.map((key) async {
+        List<StationMarker> listitems = data.keys.map((key) {
           var item = data[key];
           double distance = Geolocator.distanceBetween(
-            currentLocation.latitude ?? 33.83991025264775,
-            currentLocation.longitude ?? -6.936191841959953,
+            // ?? 33.83991025264775
+            currentLocation.latitude!,
+            // ?? -6.936191841959953
+            currentLocation.longitude!,
             item["latitudePosition"],
             item["longitudePosition"],
           );
@@ -73,11 +75,9 @@ class InfoCubit extends Cubit<InfoState> {
             titleStation: item["titleStation"],
           );
         }).toList();
-
-        List<StationMarker> resolvedMarkers = await Future.wait(listitems);
-        resolvedMarkers.sort(
+        listitems.sort(
             (a, b) => a.distancebetwin!.compareTo(b.distancebetwin as double));
-        emit(InfoDataState(marker: resolvedMarkers));
+        emit(InfoDataState(marker: listitems));
       } else {
         emit(ErrorDtatState());
       }
@@ -85,21 +85,4 @@ class InfoCubit extends Cubit<InfoState> {
       emit(ErrorDtatState());
     }
   }
-
-  // Future<double> calculateDistance(double latitude2, double longitude2) async {
-  //   // Calcul de la distance
-  //   try {
-  //     // position1 = await Geolocator.getCurrentPosition();
-
-  //     return Geolocator.distanceBetween(
-  //       currentLocation.altitude!,
-  //       currentLocation.longitude!,
-  //       latitude2,
-  //       longitude2,
-  //     );
-  //     // Mettre à jour l'état pour afficher la distance
-  //   } catch (e) {
-  //     return 0;
-  //   }
-  // }
 }
