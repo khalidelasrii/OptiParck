@@ -46,7 +46,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     Column(
                       children: [
                         Container(
-                          color: const Color(0xFF3B9874),
+                          color: const Color(0xFFAEC3AE),
                           width: double.infinity,
                           height: 150,
                         ),

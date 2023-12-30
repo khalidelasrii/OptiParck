@@ -15,34 +15,39 @@ class InfoCubit extends Cubit<InfoState> {
 
   final FirebaseDatabase _database = FirebaseDatabase.instance;
   void historyPositiondataEvent() async {
+    DataSnapshot dataSnapshot = await _database
+        .ref()
+        .child("Reservation")
+        .child(_auth.currentUser!.uid)
+        .get();
     try {
-      String userId = _auth.currentUser!.uid;
-      DataSnapshot dataSnapshot =
-          await _database.ref().child("Reservation").child(userId).get();
-
       if (dataSnapshot.value != null) {
         Map<dynamic, dynamic> data =
             dataSnapshot.value as Map<dynamic, dynamic>;
-
-        List<StationMarker> listitems = data.keys.map((key) {
-          var item = data[key];
+        var items = data.keys.map((key) {
+          var subData = data[key];
+          print(subData);
 
           return StationMarker(
-            userReserve: item["userReserve"],
-            reserve: item["reserve"],
+            dateReservation: subData["dateReservation"],
+            userReserve: subData["userReserve"],
+            reserve: subData["reserve"],
             markerId: key,
-            latitudePosition: item["latitudePosition"],
-            longitudePosition: item["longitudePosition"],
-            titleStation: item["titleStation"],
+            latitudePosition: subData["latitudePosition"],
+            longitudePosition: subData["longitudePosition"],
+            titleStation: subData["titleStation"],
           );
         }).toList();
-
-        emit(InfoDataState(marker: listitems));
+        emit(HestoryStationState(marker: items));
       } else {
+        print("item...........................................");
+
         emit(ErrorDtatState());
       }
     } catch (e) {
+      print("Cached...........................................");
       emit(ErrorDtatState());
+      print(e);
     }
   }
 
@@ -58,9 +63,7 @@ class InfoCubit extends Cubit<InfoState> {
         List<StationMarker> listitems = data.keys.map((key) {
           var item = data[key];
           double distance = Geolocator.distanceBetween(
-            // ?? 33.83991025264775
             currentLocation.latitude!,
-            // ?? -6.936191841959953
             currentLocation.longitude!,
             item["latitudePosition"],
             item["longitudePosition"],
@@ -77,7 +80,7 @@ class InfoCubit extends Cubit<InfoState> {
         }).toList();
         listitems.sort(
             (a, b) => a.distancebetwin!.compareTo(b.distancebetwin as double));
-        emit(InfoDataState(marker: listitems));
+        emit(AllPositionStationState(marker: listitems));
       } else {
         emit(ErrorDtatState());
       }

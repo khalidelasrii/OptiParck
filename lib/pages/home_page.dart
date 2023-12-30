@@ -60,7 +60,7 @@ class HomePageState extends State<HomePage> {
     ];
 
     return Scaffold(
-      backgroundColor: const Color(0xFF3B9874),
+      backgroundColor: const Color(0xFFAEC3AE),
       //! appbar
       appBar: AppBar(
         actions: [
@@ -160,7 +160,7 @@ class HomePageState extends State<HomePage> {
                         inmap
                             ? const SizedBox()
                             : SizedBox(
-                                height: 150,
+                                height: 120,
                                 child: ListView.builder(
                                   scrollDirection: Axis.horizontal,
                                   itemCount: localisationBox.length,

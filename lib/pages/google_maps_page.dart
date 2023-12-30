@@ -76,7 +76,6 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
                           context,
                           MaterialPageRoute(
                               builder: (_) => ReservationPage(
-                                    userHistory:data["userHistory"] ,
                                     positionId: id,
                                     altitud: double.parse(
                                         data["latitudePosition"].toString()),

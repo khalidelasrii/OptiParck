@@ -21,7 +21,7 @@ class _AllPositionToReserveState extends State<AllPositionToReserve> {
   Widget build(BuildContext context) {
     return BlocBuilder<InfoCubit, InfoState>(
       builder: (context, state) {
-        if (state is InfoDataState) {
+        if (state is AllPositionStationState) {
           try {
             return ListView.builder(
                 itemCount: state.marker.length,
@@ -64,7 +64,6 @@ class _AllPositionToReserveState extends State<AllPositionToReserve> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (_) => ReservationPage(
-                                            userHistory: item.userHistory ?? [],
                                             altitud: item.latitudePosition,
                                             longitude: item.longitudePosition,
                                             titleStation: item.titleStation,

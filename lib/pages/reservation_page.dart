@@ -12,9 +12,7 @@ class ReservationPage extends StatelessWidget {
     required this.longitude,
     required this.titleStation,
     required this.positionId,
-    required this.userHistory,
   });
-  final List userHistory;
   final double altitud;
   final double longitude;
   final String titleStation;
@@ -114,6 +112,7 @@ class ReservationPage extends StatelessWidget {
                   await databaseReference
                       .child('Reservation')
                       .child(user.uid)
+                      .push()
                       .set(StationMarker(
                         userReserve: user.email!,
                         reserve: true,
@@ -121,7 +120,7 @@ class ReservationPage extends StatelessWidget {
                         latitudePosition: altitud,
                         longitudePosition: longitude,
                         titleStation: titleStation,
-                      ).toMap());
+                      ).toMapReser());
                   succes();
                 } catch (e) {
                   erroradd();

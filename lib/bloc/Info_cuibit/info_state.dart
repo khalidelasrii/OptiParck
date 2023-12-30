@@ -9,14 +9,20 @@ sealed class InfoState extends Equatable {
 
 final class InfoInitial extends InfoState {}
 
-class InfoDataState extends InfoState {
+class AllPositionStationState extends InfoState {
   final List<StationMarker> marker;
-  const InfoDataState({required this.marker});
+  const AllPositionStationState({required this.marker});
 
   @override
   List<Object> get props => [marker];
 }
 
-class ErrorInfoDataState extends InfoState {}
+class HestoryStationState extends InfoState {
+  final List<StationMarker> marker;
+  const HestoryStationState({required this.marker});
+
+  @override
+  List<Object> get props => [marker];
+}
 
 class ErrorDtatState extends InfoState {}

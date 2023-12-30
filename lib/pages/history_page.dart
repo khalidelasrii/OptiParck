@@ -21,16 +21,18 @@ class _HistoryPageState extends State<HistoryPage> {
   Widget build(BuildContext context) {
     return BlocBuilder<InfoCubit, InfoState>(
       builder: (context, state) {
-        if (state is InfoDataState) {
+        if (state is HestoryStationState) {
           return ListView.builder(
               itemCount: state.marker.length,
               itemBuilder: (context, index) {
                 final item = state.marker[index];
+                DateTime parsedDate = DateTime.parse(item.dateReservation!);
 
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ListTile(
-                    tileColor: item.reserve ? Colors.redAccent : Colors.green,
+                    leading: const Icon(Icons.location_on_outlined),
+                    tileColor: Colors.blue,
                     title: Text(
                       item.titleStation,
                       style: const TextStyle(
@@ -39,7 +41,7 @@ class _HistoryPageState extends State<HistoryPage> {
                       overflow: TextOverflow.ellipsis,
                     ),
                     subtitle: Text(
-                      "(${item.latitudePosition},${item.longitudePosition})",
+                      "${parsedDate.year}/${parsedDate.month}/${parsedDate.day} - ${parsedDate.hour}:${parsedDate.minute}",
                       style: const TextStyle(
                           fontWeight: FontWeight.bold, color: Colors.white),
                       maxLines: 1,
@@ -52,7 +54,6 @@ class _HistoryPageState extends State<HistoryPage> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (_) => ReservationPage(
-                                          userHistory: item.userHistory ?? [],
                                           altitud: item.latitudePosition,
                                           longitude: item.longitudePosition,
                                           titleStation: item.titleStation,
