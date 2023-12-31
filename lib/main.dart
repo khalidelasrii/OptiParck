@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:optiparck/bloc/Info_cuibit/info_cubit.dart';
 import 'package:optiparck/bloc/cubit/auth_cubit.dart';
-import 'package:optiparck/pages/home_page.dart';
+import 'package:optiparck/ddd.dart';
 import 'package:optiparck/pages/sing_in_page.dart';
 
 void main() async {
@@ -41,7 +41,7 @@ class OptiParck extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: user != null ? const HomePage() : const SignInPage(),
+        home: user != null ? MapScreen() : const SignInPage(),
       ),
     );
   }

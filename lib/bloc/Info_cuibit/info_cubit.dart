@@ -26,7 +26,6 @@ class InfoCubit extends Cubit<InfoState> {
             dataSnapshot.value as Map<dynamic, dynamic>;
         var items = data.keys.map((key) {
           var subData = data[key];
-          print(subData);
 
           return StationMarker(
             dateReservation: subData["dateReservation"],
@@ -40,14 +39,10 @@ class InfoCubit extends Cubit<InfoState> {
         }).toList();
         emit(HestoryStationState(marker: items));
       } else {
-        print("item...........................................");
-
         emit(ErrorDtatState());
       }
     } catch (e) {
-      print("Cached...........................................");
       emit(ErrorDtatState());
-      print(e);
     }
   }
 
