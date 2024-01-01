@@ -38,8 +38,9 @@ class _MapScreenState extends State<MapScreen> {
     return SafeArea(
       child: Scaffold(
         body: GoogleMap(
+          mapType: MapType.satellite,
           initialCameraPosition: CameraPosition(
-              target: LatLng(_originLatitude, _originLongitude), zoom: 15),
+              target: LatLng(_originLatitude, _originLongitude), zoom: 8),
           myLocationEnabled: true,
           tiltGesturesEnabled: true,
           compassEnabled: true,

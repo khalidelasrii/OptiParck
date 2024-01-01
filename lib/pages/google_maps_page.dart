@@ -96,6 +96,7 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
             }).toList();
 
             return GoogleMap(
+              mapType: MapType.hybrid,
               onMapCreated: _onMapCreated,
               myLocationButtonEnabled: true,
               myLocationEnabled: true,
