@@ -1,4 +1,4 @@
-import 'package:firebase_database/firebase_database.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:optiparck/pages/home_page.dart';
 import 'package:optiparck/widgets/snack_bar_messages.dart';
@@ -175,10 +175,9 @@ class _UpdatePositionState extends State<UpdatePosition> {
                       MaterialStateColor.resolveWith((states) => Colors.blue)),
               onPressed: () async {
                 try {
-                  await FirebaseDatabase.instance
-                      .ref()
-                      .child('Marker')
-                      .child(widget.positionId)
+                  await FirebaseFirestore.instance
+                      .collection('Marker')
+                      .doc(widget.positionId)
                       .update(StationMarker(
                               userReserve: "Non",
                               reserve: true,
@@ -216,9 +215,10 @@ class _UpdatePositionState extends State<UpdatePosition> {
                         MaterialStateColor.resolveWith((states) => Colors.red)),
                 onPressed: () async {
                   try {
-                    DatabaseReference databaseReference =
-                        FirebaseDatabase.instance.ref().child('Marker');
-                    await databaseReference.child(widget.positionId).remove();
+                    await FirebaseFirestore.instance
+                        .collection('Marker')
+                        .doc(widget.positionId)
+                        .delete();
                     longitudeControlor.clear();
                     titleStationControlor.clear();
                     altitudControlor.clear();
@@ -236,10 +236,10 @@ class _UpdatePositionState extends State<UpdatePosition> {
                 )),
             ElevatedButton(
                 onPressed: () async {
-                  DatabaseReference databaseReference =
-                      FirebaseDatabase.instance.ref().child('Marker');
-                  await databaseReference.child(widget.positionId).update(
-                      StationMarker(
+                  await FirebaseFirestore.instance
+                      .collection('Marker')
+                      .doc(widget.positionId)
+                      .update(StationMarker(
                               userReserve: "Non",
                               reserve: true,
                               markerId: "",
@@ -250,19 +250,7 @@ class _UpdatePositionState extends State<UpdatePosition> {
                               titleStation:
                                   titleStationControlor.text.toString())
                           .toMap());
-                  //             await    FirebaseDatabase.instance.ref().child('Reservation')
-                  // .child(widget.positionId).update(
-                  //       StationMarker(
-                  //               userReserve: "Non",
-                  //               reserve: true,
-                  //               markerId: "",
-                  //               latitudePosition: double.parse(
-                  //                   altitudControlor.text.toString()),
-                  //               longitudePosition: double.parse(
-                  //                   longitudeControlor.text.toString()),
-                  //               titleStation:
-                  //                   titleStationControlor.text.toString())
-                  //           .toMap());
+
                   succes();
                 },
                 child: const Text("Dereserver"))

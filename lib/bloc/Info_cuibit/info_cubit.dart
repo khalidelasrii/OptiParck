@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:location/location.dart';
 import 'package:optiparck/widgets/station_marker.dart';
@@ -10,75 +9,59 @@ part 'info_state.dart';
 
 class InfoCubit extends Cubit<InfoState> {
   InfoCubit() : super(InfoInitial());
-  final _auth = FirebaseAuth.instance;
   Location location = Location();
 
-  final FirebaseDatabase _database = FirebaseDatabase.instance;
+  final FirebaseFirestore _database = FirebaseFirestore.instance;
   void historyPositiondataEvent() async {
-    DataSnapshot dataSnapshot = await _database
-        .ref()
-        .child("Reservation")
-        .child(_auth.currentUser!.uid)
-        .get();
+    var dataSnapshot = await _database.collection("Reservation").get();
     try {
-      if (dataSnapshot.value != null) {
-        Map<dynamic, dynamic> data =
-            dataSnapshot.value as Map<dynamic, dynamic>;
-        var items = data.keys.map((key) {
-          var subData = data[key];
-
+      var items = dataSnapshot.docs.map(
+        (subData) {
           return StationMarker(
             dateReservation: subData["dateReservation"],
             userReserve: subData["userReserve"],
             reserve: subData["reserve"],
-            markerId: key,
+            markerId: subData.id,
             latitudePosition: subData["latitudePosition"],
             longitudePosition: subData["longitudePosition"],
             titleStation: subData["titleStation"],
           );
-        }).toList();
-        emit(HestoryStationState(marker: items));
-      } else {
-        emit(ErrorDtatState());
-      }
+        },
+      ).toList();
+
+      emit(HestoryStationState(marker: items));
     } catch (e) {
       emit(ErrorDtatState());
     }
   }
 
   void getallPositionToReserve() async {
-    DataSnapshot dataSnapshot = await _database.ref().child("Marker").get();
+    var dataSnapshot = await _database.collection('Marker').get();
+
     LocationData currentLocation = await location.getLocation();
 
     try {
-      if (dataSnapshot.value != null) {
-        Map<dynamic, dynamic> data =
-            dataSnapshot.value as Map<dynamic, dynamic>;
+      List<StationMarker> listitems = dataSnapshot.docs.map((subdata) {
+        double distance = Geolocator.distanceBetween(
+          currentLocation.latitude!,
+          currentLocation.longitude!,
+          subdata["latitudePosition"],
+          subdata["longitudePosition"],
+        );
+        return StationMarker(
+          distancebetwin: distance,
+          userReserve: subdata["userReserve"],
+          reserve: subdata["reserve"],
+          markerId: subdata.id,
+          latitudePosition: subdata["latitudePosition"],
+          longitudePosition: subdata["longitudePosition"],
+          titleStation: subdata["titleStation"],
+        );
+      }).toList();
 
-        List<StationMarker> listitems = data.keys.map((key) {
-          var item = data[key];
-          double distance = Geolocator.distanceBetween(
-            currentLocation.latitude!,
-            currentLocation.longitude!,
-            item["latitudePosition"],
-            item["longitudePosition"],
-          );
-          return StationMarker(
-            distancebetwin: distance,
-            userReserve: item["userReserve"],
-            reserve: item["reserve"],
-            markerId: key,
-            latitudePosition: item["latitudePosition"],
-            longitudePosition: item["longitudePosition"],
-            titleStation: item["titleStation"],
-          );
-        }).toList();
-        listitems.sort(
-            (a, b) => a.distancebetwin!.compareTo(b.distancebetwin as double));
-        emit(AllPositionStationState(marker: listitems));
-      } else {
-        emit(ErrorDtatState());
-      }
+      listitems.sort(
+          (a, b) => a.distancebetwin!.compareTo(b.distancebetwin as double));
+      emit(AllPositionStationState(marker: listitems));
     } catch (e) {
       emit(ErrorDtatState());
     }

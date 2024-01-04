@@ -1,5 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:optiparck/pages/home_page.dart';
 import 'package:optiparck/widgets/snack_bar_messages.dart';
@@ -64,8 +64,6 @@ class ReservationPage extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Column(
-          // mainAxisAlignment: MainAxisAlignment.center,
-          // crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -94,12 +92,11 @@ class ReservationPage extends StatelessWidget {
                       (states) => Colors.greenAccent)),
               onPressed: () async {
                 try {
-                  DatabaseReference databaseReference =
-                      FirebaseDatabase.instance.ref();
+                  var databaseReference = FirebaseFirestore.instance;
 
                   await databaseReference
-                      .child('Marker')
-                      .child(positionId)
+                      .collection('Marker')
+                      .doc(positionId)
                       .update(StationMarker(
                         userReserve: user!.email!,
                         reserve: false,
@@ -110,10 +107,8 @@ class ReservationPage extends StatelessWidget {
                       ).toMap());
 
                   await databaseReference
-                      .child('Reservation')
-                      .child(user.uid)
-                      .push()
-                      .set(StationMarker(
+                      .collection('Reservation')
+                      .add(StationMarker(
                         userReserve: user.email!,
                         reserve: true,
                         markerId: positionId,

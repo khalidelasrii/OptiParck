@@ -1,5 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:optiparck/pages/reservation_page.dart';
@@ -20,75 +20,56 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
     mapController = controller;
   }
 
-  // @override
-  // void dispose() {
-  //   super.dispose();
-  //   mapController?.dispose();
-  // }
-
   @override
   Widget build(BuildContext context) {
-    //     Future<void> getCurrentLocation() async {
-    //   try {
-    //     LocationData currentLocation = await location.getLocation();
-    //     mapController?.animateCamera(CameraUpdate.newLatLng(
-    //       LatLng(currentLocation.latitude!, currentLocation.longitude!),
-    //     ));
-    //     setState(() {});
-    //   } catch (e) {
-    //     print("Error location: $e");
-    //   }
-    // }
-
     User? user = FirebaseAuth.instance.currentUser;
 
-    return StreamBuilder<DatabaseEvent>(
-        stream: FirebaseDatabase.instance.ref().child('Marker').onValue,
-        builder: (context, AsyncSnapshot<DatabaseEvent> snapshot) {
+    return StreamBuilder(
+        stream: FirebaseFirestore.instance.collection('Marker').snapshots(),
+        builder: (context, snapshot) {
           if (snapshot.hasData) {
-            List<Marker> markers = snapshot.data!.snapshot.children.map((e) {
-              var id = e.key;
-              Map<dynamic, dynamic> data = e.value as Map<dynamic, dynamic>;
-
+            List<Marker> markers = snapshot.data!.docs.map((subdata) {
               return Marker(
-                markerId: MarkerId(id!),
+                markerId: MarkerId(subdata.id),
                 position: LatLng(
-                    double.parse(data["latitudePosition"].toString()),
-                    double.parse(data["longitudePosition"].toString())),
+                    double.parse(subdata["latitudePosition"].toString()),
+                    double.parse(subdata["longitudePosition"].toString())),
                 infoWindow: InfoWindow(
-                  title: data["titleStation"].toString(),
+                  title: subdata["titleStation"].toString(),
                   onTap: () {
                     if (user?.email == "khalid@gmail.com") {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (_) => UpdatePosition(
-                                    positionId: id,
+                                    positionId: subdata.id,
                                     altitud: double.parse(
-                                        data["latitudePosition"].toString()),
+                                        subdata["latitudePosition"].toString()),
                                     longitude: double.parse(
-                                        data["longitudePosition"].toString()),
+                                        subdata["longitudePosition"]
+                                            .toString()),
                                     titleStation:
-                                        data["titleStation"].toString(),
+                                        subdata["titleStation"].toString(),
                                   )));
                     } else {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (_) => ReservationPage(
-                                    positionId: id,
+                                    positionId: subdata.id,
                                     altitud: double.parse(
-                                        data["latitudePosition"].toString()),
+                                        subdata["latitudePosition"].toString()),
                                     longitude: double.parse(
-                                        data["longitudePosition"].toString()),
+                                        subdata["longitudePosition"]
+                                            .toString()),
                                     titleStation:
-                                        data["titleStation"].toString(),
+                                        subdata["titleStation"].toString(),
                                   )));
                     }
                   },
                 ),
                 icon: BitmapDescriptor.defaultMarkerWithHue(
-                  data["reserve"]
+                  subdata["reserve"]
                       ? BitmapDescriptor.hueGreen
                       : BitmapDescriptor.hueRed,
                 ),
@@ -108,9 +89,9 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
               onLongPress: (argument) async {
                 if (user?.email == "khalid@gmail.com") {
                   try {
-                    DatabaseReference databaseReference =
-                        FirebaseDatabase.instance.ref().child('Marker');
-                    await databaseReference.push().set(StationMarker(
+                    await FirebaseFirestore.instance
+                        .collection('Marker')
+                        .add(StationMarker(
                           userReserve: "Non",
                           reserve: true,
                           markerId: "",
@@ -129,23 +110,4 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
           }
         });
   }
-
-  // Future<double> calculateDistance(double latitude2, double longitude2) async {
-  //   // Calcul de la distance
-  //   try {
-  //     LocationData currentLocation = await location.getLocation();
-
-  // position1 = await Geolocator.getCurrentPosition();
-
-  //     return Geolocator.distanceBetween(
-  //       currentLocation.altitude!,
-  //       currentLocation.longitude!,
-  //       latitude2,
-  //       longitude2,
-  //     );
-  //     // Mettre à jour l'état pour afficher la distance
-  //   } catch (e) {
-  //     return 0;
-  //   }
-  // }
 }
