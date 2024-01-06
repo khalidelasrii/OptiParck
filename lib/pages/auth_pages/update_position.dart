@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:optiparck/pages/home_page.dart';
+import 'package:optiparck/pages/main_home_page.dart';
 import 'package:optiparck/widgets/snack_bar_messages.dart';
 import 'package:optiparck/widgets/station_marker.dart';
 
@@ -64,8 +64,8 @@ class _UpdatePositionState extends State<UpdatePosition> {
         ],
         title: MaterialButton(
           onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (_) => const HomePage()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (_) => const MainHomePage()));
           },
           child: Image.asset(
             "images/logo.png",
@@ -268,6 +268,6 @@ class _UpdatePositionState extends State<UpdatePosition> {
   void succes() {
     SnackBarMessage().showSuccessSnackBar(message: "Succes", context: context);
     Navigator.push(
-        context, MaterialPageRoute(builder: (_) => const HomePage()));
+        context, MaterialPageRoute(builder: (_) => const MainHomePage()));
   }
 }

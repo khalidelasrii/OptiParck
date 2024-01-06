@@ -17,6 +17,14 @@ class AllPositionStationState extends InfoState {
   List<Object> get props => [marker];
 }
 
+class OnePositionStationState extends InfoState {
+  final StationMarker marker;
+  const OnePositionStationState({required this.marker});
+
+  @override
+  List<Object> get props => [marker];
+}
+
 class HestoryStationState extends InfoState {
   final List<StationMarker> marker;
   const HestoryStationState({required this.marker});

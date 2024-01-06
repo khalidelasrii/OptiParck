@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:optiparck/bloc/cubit/auth_cubit.dart';
-import 'package:optiparck/pages/sing_in_page.dart';
+import 'package:optiparck/pages/auth_pages/sing_in_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});

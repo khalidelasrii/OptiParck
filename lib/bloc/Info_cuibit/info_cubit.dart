@@ -9,6 +9,11 @@ part 'info_state.dart';
 
 class InfoCubit extends Cubit<InfoState> {
   InfoCubit() : super(InfoInitial());
+
+  void infoInitiale() {
+    emit(InfoInitial());
+  }
+
   Location location = Location();
 
   final FirebaseFirestore _database = FirebaseFirestore.instance;
@@ -65,5 +70,26 @@ class InfoCubit extends Cubit<InfoState> {
     } catch (e) {
       emit(ErrorDtatState());
     }
+  }
+
+  void getDriveePosition(String markerId) async {
+    var dataSnapshot = await _database.collection('Marker').doc(markerId).get();
+    LocationData currentLocation = await location.getLocation();
+
+    double distance = Geolocator.distanceBetween(
+      currentLocation.latitude!,
+      currentLocation.longitude!,
+      dataSnapshot["latitudePosition"],
+      dataSnapshot["longitudePosition"],
+    );
+    emit(OnePositionStationState(
+        marker: StationMarker(
+            distancebetwin: distance,
+            userReserve: dataSnapshot["userReserve"],
+            reserve: dataSnapshot["reserve"],
+            markerId: markerId,
+            latitudePosition: dataSnapshot["latitudePosition"],
+            longitudePosition: dataSnapshot["longitudePosition"],
+            titleStation: dataSnapshot["titleStation"])));
   }
 }

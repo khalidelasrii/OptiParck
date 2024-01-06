@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:optiparck/pages/home_page.dart';
+import 'package:optiparck/pages/main_home_page.dart';
 import 'package:optiparck/widgets/snack_bar_messages.dart';
 import 'package:optiparck/widgets/station_marker.dart';
 
@@ -29,7 +29,7 @@ class ReservationPage extends StatelessWidget {
       SnackBarMessage()
           .showSuccessSnackBar(message: "Succes", context: context);
       Navigator.push(
-          context, MaterialPageRoute(builder: (_) => const HomePage()));
+          context, MaterialPageRoute(builder: (_) => const MainHomePage()));
     }
 
     User? user = FirebaseAuth.instance.currentUser;
@@ -52,8 +52,8 @@ class ReservationPage extends StatelessWidget {
         ],
         title: MaterialButton(
           onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (_) => const HomePage()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (_) => const MainHomePage()));
           },
           child: Image.asset(
             "images/logo.png",
@@ -138,7 +138,7 @@ class ReservationPage extends StatelessWidget {
                         MaterialStateColor.resolveWith((states) => Colors.red)),
                 onPressed: () async {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => const HomePage()));
+                      MaterialPageRoute(builder: (_) => const MainHomePage()));
                 },
                 child: const Padding(
                   padding: EdgeInsets.all(8.0),

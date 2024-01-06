@@ -21,10 +21,6 @@ class IsSignInState extends AuthState {
 
 class ErrorSignInState extends AuthState {}
 
-class InternetConnectState extends AuthState {}
-
-class InternetDesconnectState extends AuthState {}
-
 class SignOutState extends AuthState {}
 
 class IsSignUpState extends AuthState {}

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:optiparck/bloc/cubit/auth_cubit.dart';
-import 'package:optiparck/pages/home_page.dart';
-import 'package:optiparck/pages/sing_up_page.dart';
+import 'package:optiparck/pages/auth_pages/sing_up_page.dart';
+import 'package:optiparck/pages/main_home_page.dart';
 import 'package:optiparck/widgets/Client.dart';
 import 'package:optiparck/widgets/snack_bar_messages.dart';
 
@@ -26,7 +26,7 @@ class SignInPage extends StatelessWidget {
       leading: IconButton(
         onPressed: () {
           Navigator.push(
-              context, MaterialPageRoute(builder: (_) => const HomePage()));
+              context, MaterialPageRoute(builder: (_) => const MainHomePage()));
         },
         icon: const Icon(
           Icons.arrow_back_rounded,
@@ -69,7 +69,7 @@ class _BuildBodySingInState extends State<BuildBodySingIn> {
           SnackBarMessage().showSuccessSnackBar(
               message: "BienVenue dans Optiparck", context: context);
           Navigator.push(
-              context, MaterialPageRoute(builder: (_) => const HomePage()));
+              context, MaterialPageRoute(builder: (_) => const MainHomePage()));
         }
       },
       builder: (context, state) {

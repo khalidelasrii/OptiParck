@@ -82,12 +82,4 @@ class AuthCubit extends Cubit<AuthState> {
         .doc(_auth.currentUser!.uid)
         .set(user.toMap());
   }
-
-  internetConnectEvent() {
-    emit(InternetConnectState());
-  }
-
-  internetDeconnectEvent() {
-    emit(InternetDesconnectState());
-  }
 }
