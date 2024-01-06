@@ -41,7 +41,7 @@ class OptiParck extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: user != null ? MapScreen() : const SignInPage(),
+        home: user != null ? const HomePage() : const SignInPage(),
       ),
     );
   }

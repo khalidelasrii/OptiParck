@@ -35,23 +35,7 @@ class HomePageState extends State<HomePage> {
           BlocProvider.of<AuthCubit>(context).internetDeconnectEvent();
       }
     });
-    List<Widget> localisationBox = [
-      const HomeStationStatus(
-        image: 'a.jpg',
-        text: 'Station CMC tamesna',
-        subtext: "station de voiture et camion",
-      ),
-      const HomeStationStatus(
-        image: 'b.jpg',
-        text: 'Station Temara Centre-Ville',
-        subtext: "station de voiture et camion",
-      ),
-      const HomeStationStatus(
-        image: 'c.jpg',
-        text: 'Station Tamesna Nor',
-        subtext: "station de voiture et camion",
-      ),
-    ];
+
     List<Widget> bodybuilder = [
       const GoogleMapsPage(),
       const AllPositionToReserve(),
@@ -112,7 +96,7 @@ class HomePageState extends State<HomePage> {
       ),
 
       //! Body
-      body: BlocConsumer<AuthCubit, AuthState>(
+      body: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state is InternetDesconnectState) {
             SnackBarMessage().showErrorSnackBar(
@@ -123,58 +107,7 @@ class HomePageState extends State<HomePage> {
             });
           }
         },
-        builder: (context, state) {
-          return Stack(
-            alignment: Alignment.bottomLeft,
-            children: [
-              bodybuilder[currIndex],
-              currIndex == 0
-                  ? Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        inmap
-                            ? MaterialButton(
-                                color: Colors.greenAccent,
-                                onPressed: () {
-                                  setState(() {
-                                    inmap = false;
-                                  });
-                                },
-                                child: const Icon(
-                                  Icons.keyboard_double_arrow_up_outlined,
-                                  color: Colors.green,
-                                ),
-                              )
-                            : IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    inmap = true;
-                                  });
-                                },
-                                icon: const Icon(
-                                  Icons.keyboard_double_arrow_down_outlined,
-                                  color: Colors.red,
-                                ),
-                              ),
-                        inmap
-                            ? const SizedBox()
-                            : SizedBox(
-                                height: 120,
-                                child: ListView.builder(
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: localisationBox.length,
-                                  itemBuilder: (context, index) {
-                                    return localisationBox[index];
-                                  },
-                                ),
-                              ),
-                      ],
-                    )
-                  : const SizedBox(),
-            ],
-          );
-        },
+        child: bodybuilder[currIndex],
       ),
 
       //! BottomNavigationBar
