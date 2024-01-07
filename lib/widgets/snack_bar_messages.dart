@@ -5,9 +5,11 @@ class SnackBarMessage {
       {required String message, required BuildContext context}) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(
-          message,
-          style: const TextStyle(color: Colors.white),
+        content: Center(
+          child: Text(
+            message,
+            style: const TextStyle(color: Colors.white),
+          ),
         ),
         backgroundColor: Colors.green,
       ),
@@ -18,9 +20,12 @@ class SnackBarMessage {
       {required String message, required BuildContext context}) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(
-          message,
-          style: const TextStyle(color: Colors.white),
+        dismissDirection: DismissDirection.up,
+        content: Center(
+          child: Text(
+            message,
+            style: const TextStyle(color: Colors.white),
+          ),
         ),
         backgroundColor: Colors.redAccent,
       ),

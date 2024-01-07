@@ -34,3 +34,19 @@ class HestoryStationState extends InfoState {
 }
 
 class ErrorDtatState extends InfoState {}
+
+class SearcheStationState extends InfoState {
+  final List<StationMarker> marker;
+  const SearcheStationState({required this.marker});
+
+  @override
+  List<Object> get props => [marker];
+}
+
+class UpdateCameraPositionState extends InfoState {
+  final LatLng newPosition;
+
+  const UpdateCameraPositionState({required this.newPosition});
+  @override
+  List<Object> get props => [newPosition];
+}

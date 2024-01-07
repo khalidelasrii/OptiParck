@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:optiparck/bloc/Info_cuibit/info_cubit.dart';
+import 'package:optiparck/pages/auth_pages/sing_in_page.dart';
 import 'package:optiparck/pages/reservation_page.dart';
 
 class AllPositionToReserve extends StatefulWidget {
@@ -11,6 +13,7 @@ class AllPositionToReserve extends StatefulWidget {
 }
 
 class _AllPositionToReserveState extends State<AllPositionToReserve> {
+  User? user = FirebaseAuth.instance.currentUser;
   @override
   void initState() {
     super.initState();
@@ -60,14 +63,21 @@ class _AllPositionToReserveState extends State<AllPositionToReserve> {
                       trailing: item.reserve
                           ? ElevatedButton(
                               onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (_) => ReservationPage(
-                                            altitud: item.latitudePosition,
-                                            longitude: item.longitudePosition,
-                                            titleStation: item.titleStation,
-                                            positionId: item.markerId)));
+                                user != null
+                                    ? Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (_) => ReservationPage(
+                                                altitud: item.latitudePosition,
+                                                longitude:
+                                                    item.longitudePosition,
+                                                titleStation: item.titleStation,
+                                                positionId: item.markerId)))
+                                    : Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (_) =>
+                                                const SignInPage()));
                               },
                               child: const Icon(
                                 Icons.chevron_right,

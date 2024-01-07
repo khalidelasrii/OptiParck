@@ -26,7 +26,7 @@ class _HistoryPageState extends State<HistoryPage> {
               itemCount: state.marker.length,
               itemBuilder: (context, index) {
                 final item = state.marker[index];
-                DateTime parsedDate = DateTime.parse(item.dateReservation!);
+                DateTime parsedDate = item.dateReservation!.toDate();
 
                 return Padding(
                   padding: const EdgeInsets.all(8.0),

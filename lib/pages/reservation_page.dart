@@ -93,6 +93,7 @@ class ReservationPage extends StatelessWidget {
               onPressed: () async {
                 try {
                   var databaseReference = FirebaseFirestore.instance;
+                  var auth = FirebaseAuth.instance;
 
                   await databaseReference
                       .collection('Marker')
@@ -108,6 +109,8 @@ class ReservationPage extends StatelessWidget {
 
                   await databaseReference
                       .collection('Reservation')
+                      .doc(auth.currentUser!.uid)
+                      .collection("Station")
                       .add(StationMarker(
                         userReserve: user.email!,
                         reserve: true,

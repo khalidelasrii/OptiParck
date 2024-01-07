@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
 class StationMarker extends Equatable {
@@ -8,7 +9,7 @@ class StationMarker extends Equatable {
   final bool reserve;
   final String userReserve;
   final double? distancebetwin;
-  final String? dateReservation;
+  final Timestamp? dateReservation;
 
   const StationMarker({
     this.dateReservation,
@@ -32,7 +33,7 @@ class StationMarker extends Equatable {
 
   Map<String, dynamic> toMapReser() {
     return {
-      "dateReservation": DateTime.now().toString(),
+      "dateReservation": DateTime.now(),
       "userReserve": userReserve,
       "latitudePosition": latitudePosition,
       "longitudePosition": longitudePosition,

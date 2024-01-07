@@ -60,16 +60,14 @@ class _BuildBodySingInState extends State<BuildBodySingIn> {
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
-        if (state is ErrorSignInState) {
-          // Traitement en cas d'erreur de connexion
-          SnackBarMessage()
-              .showErrorSnackBar(message: "Error to connect", context: context);
-        } else if (state is IsSignInState) {
+        if (state is IsSignInState) {
           // Traitement après une connexion réussie
-          SnackBarMessage().showSuccessSnackBar(
-              message: "BienVenue dans Optiparck", context: context);
           Navigator.push(
               context, MaterialPageRoute(builder: (_) => const MainHomePage()));
+        } else if (state is ErrorSignInState) {
+          // Traitement en cas d'erreur de connexion
+          SnackBarMessage().showErrorSnackBar(
+              message: "Error to connect Try agine", context: context);
         }
       },
       builder: (context, state) {
@@ -206,7 +204,7 @@ class _BuildBodySingInState extends State<BuildBodySingIn> {
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                     minimumSize: const Size(200, 50),
-                                    // backgroundColor: Colors.blue,
+                                    backgroundColor: Colors.blue,
                                   ),
                                   onPressed: () {
                                     // Action pour se connecter
@@ -263,7 +261,8 @@ class _BuildBodySingInState extends State<BuildBodySingIn> {
                                     // backgroundColor: Colors.blue,
                                   ),
                                   onPressed: () {
-                                    // Action pour se connecter avec Google
+                                    BlocProvider.of<AuthCubit>(context)
+                                        .signInWithGoogle();
                                   },
                                   child: ListTile(
                                     leading: Padding(
