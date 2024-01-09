@@ -25,77 +25,65 @@ class _AllPositionToReserveState extends State<AllPositionToReserve> {
     return BlocBuilder<InfoCubit, InfoState>(
       builder: (context, state) {
         if (state is AllPositionStationState) {
-          try {
-            return ListView.builder(
-                itemCount: state.marker.length,
-                itemBuilder: (context, index) {
-                  final item = state.marker[index];
+          return ListView.builder(
+              itemCount: state.marker.length,
+              itemBuilder: (context, index) {
+                final item = state.marker[index];
 
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ListTile(
-                      leading: const Icon(Icons.location_on_outlined),
-                      tileColor: item.reserve ? Colors.green : Colors.redAccent,
-                      title: Text(
-                        item.titleStation,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold, color: Colors.white),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      subtitle: item.distancebetwin! < 1000
-                          ? Text(
-                              "${item.distancebetwin!.toStringAsFixed(2)} m",
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            )
-                          : Text(
-                              "${(item.distancebetwin! / 1000).toStringAsFixed(2)} Km",
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                      trailing: item.reserve
-                          ? ElevatedButton(
-                              onPressed: () {
-                                user != null
-                                    ? Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (_) => ReservationPage(
-                                                altitud: item.latitudePosition,
-                                                longitude:
-                                                    item.longitudePosition,
-                                                titleStation: item.titleStation,
-                                                positionId: item.markerId)))
-                                    : Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (_) =>
-                                                const SignInPage()));
-                              },
-                              child: const Icon(
-                                Icons.chevron_right,
-                                color: Colors.red,
-                              ))
-                          : const SizedBox(),
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ListTile(
+                    leading: const Icon(Icons.location_on_outlined),
+                    tileColor: item.reserve ? Colors.green : Colors.redAccent,
+                    title: Text(
+                      item.titleStation,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.white),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                  );
-                });
-          } catch (e) {
-            return const Padding(
-              padding: EdgeInsets.only(top: 50),
-              child: Center(
-                child: SizedBox(
-                    height: 30, width: 30, child: CircularProgressIndicator()),
-              ),
-            );
-          }
+                    subtitle: item.distancebetwin! < 1000
+                        ? Text(
+                            "${item.distancebetwin!.toStringAsFixed(2)} m",
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          )
+                        : Text(
+                            "${(item.distancebetwin! / 1000).toStringAsFixed(2)} Km",
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                    trailing: item.reserve
+                        ? ElevatedButton(
+                            onPressed: () {
+                              user != null
+                                  ? Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) => ReservationPage(
+                                              altitud: item.latitudePosition,
+                                              longitude: item.longitudePosition,
+                                              titleStation: item.titleStation,
+                                              positionId: item.markerId)))
+                                  : Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) => const SignInPage()));
+                            },
+                            child: const Icon(
+                              Icons.chevron_right,
+                              color: Colors.red,
+                            ))
+                        : const SizedBox(),
+                  ),
+                );
+              });
         } else {
           return const Padding(
             padding: EdgeInsets.only(top: 50),
