@@ -12,7 +12,20 @@
           "package_name": "com.example.optiparck"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "110202083701-gr6p5lbj1jr7i7pg2hhj3j8fe12b8lme.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.optiparck",
+            "certificate_hash": "3ad1c1b6500cb403e823662a92578df4b87d1185"
+          }
+        },
+        {
+          "client_id": "110202083701-g8lvgvsor98m2pteqe0ilvghhgtc3ghe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCob1JBj1X35dWNrUEJR48csl152gX36Zc"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "110202083701-g8lvgvsor98m2pteqe0ilvghhgtc3ghe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

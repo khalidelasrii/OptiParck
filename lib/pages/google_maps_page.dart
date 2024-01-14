@@ -216,11 +216,12 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
                           setState(() {
                             searchbody = true;
                           });
-                        } else {
-                          setState(() {
-                            searchbody = true;
-                          });
                         }
+                        // else {
+                        //   setState(() {
+                        //     searchbody = true;
+                        //   });
+                        // }
                       },
                       builder: ((context, state) {
                         if (state is AllPositionStationState) {
@@ -488,6 +489,24 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
                                 ],
                               ),
                             ],
+                          );
+                        } else if (state is GetOnePositionStationState) {
+                          return SizedBox(
+                            height: 120,
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 8, right: 8, bottom: 8),
+                              child: Container(
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      border: Border.all(
+                                          color: Colors.red, width: 3),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(15))),
+                                  child: const Center(
+                                      child: CircularProgressIndicator())),
+                            ),
                           );
                         } else {
                           return ElevatedButton(

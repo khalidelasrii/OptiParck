@@ -25,6 +25,8 @@ class OnePositionStationState extends InfoState {
   List<Object> get props => [marker];
 }
 
+class GetOnePositionStationState extends InfoState {}
+
 class HestoryStationState extends InfoState {
   final List<StationMarker> marker;
   const HestoryStationState({required this.marker});
@@ -41,12 +43,4 @@ class SearcheStationState extends InfoState {
 
   @override
   List<Object> get props => [marker];
-}
-
-class UpdateCameraPositionState extends InfoState {
-  final LatLng newPosition;
-
-  const UpdateCameraPositionState({required this.newPosition});
-  @override
-  List<Object> get props => [newPosition];
 }

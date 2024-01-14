@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:optiparck/widgets/station_marker.dart';
 
@@ -48,6 +47,8 @@ class InfoCubit extends Cubit<InfoState> {
   }
 
   void getallPositionToReserve() async {
+    emit(GetOnePositionStationState());
+
     var dataSnapshot = await _database.collection('Marker').get();
 
     LocationData currentLocation = await location.getLocation();
@@ -109,6 +110,7 @@ class InfoCubit extends Cubit<InfoState> {
   }
 
   void getDriveePosition(String markerId) async {
+    emit(GetOnePositionStationState());
     var dataSnapshot = await _database.collection('Marker').doc(markerId).get();
     LocationData currentLocation = await location.getLocation();
 
@@ -127,9 +129,5 @@ class InfoCubit extends Cubit<InfoState> {
             latitudePosition: dataSnapshot["latitudePosition"],
             longitudePosition: dataSnapshot["longitudePosition"],
             titleStation: dataSnapshot["titleStation"])));
-  }
-
-  void updatePositionCameraEvent(LatLng newPosition) {
-    emit(UpdateCameraPositionState(newPosition: newPosition));
   }
 }
