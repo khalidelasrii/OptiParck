@@ -44,3 +44,4 @@ class SearcheStationState extends InfoState {
   @override
   List<Object> get props => [marker];
 }
+

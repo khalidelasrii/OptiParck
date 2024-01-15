@@ -34,6 +34,9 @@ class MainHomePageState extends State<MainHomePage> {
 
   List<Widget> bodybuilder = [
     const GoogleMapsPage(),
+    // const Center(
+    //   child: CircularProgressIndicator(),
+    // ),
     const AllPositionToReserve(),
     const HistoryPage(),
     const ProfilePage(),
@@ -46,16 +49,16 @@ class MainHomePageState extends State<MainHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    InternetConnectionChecker().onStatusChange.listen((status) {
-      switch (status) {
-        case InternetConnectionStatus.disconnected:
-          SnackBarMessage()
-              .showErrorSnackBar(message: "No internet", context: context);
-          break; // Ajout de la clause break
-        default:
-        // Gestion des autres états si nécessaire
-      }
-    });
+    // InternetConnectionChecker().onStatusChange.listen((status) {
+    //   switch (status) {
+    //     case InternetConnectionStatus.disconnected:
+    //       SnackBarMessage()
+    //           .showErrorSnackBar(message: "No internet", context: context);
+    //       break; // Ajout de la clause break
+    //     default:
+    //     // Gestion des autres états si nécessaire
+    //   }
+    // });
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) async {
         if (state is SignOutState) {
